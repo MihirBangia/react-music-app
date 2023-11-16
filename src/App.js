@@ -1,11 +1,17 @@
-import logo from "./logo.svg";
 import "./App.css";
-import Home from "./components/Home/home";
+import { BrowserRouter as Router } from "react-router-dom";
+import UseRoutes from "./components/routes/routes";
+import { createContext } from "react";
 
+export const SongContext = createContext("");
 function App() {
   return (
     <div className="App">
-      <Home />
+      <div className="body" />
+
+      <Router>
+        <UseRoutes />
+      </Router>
     </div>
   );
 }
