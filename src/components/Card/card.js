@@ -1,21 +1,20 @@
 import React, {useState } from "react";
 import "./card.css";
 import Player from "../player/player";
-import { SongContext } from "../../App";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 export default function Card(props) {
   let songs = props.songs;
   const [currentsong, setcurrentsong] = useState(null);
-
+  const [queue,setqueue] = useState([]);
+  
   function truncate(source, size) {
     return source.length > size ? source.slice(0, size - 1) + "…" : source;
   }
 
+
   return (
     <>
-      <SongContext.Provider value={currentsong}>
-        <Player />
-      </SongContext.Provider>
       <div
         style={{
           display: "flex",
@@ -26,29 +25,28 @@ export default function Card(props) {
         }}
       >
         {songs?.map((item, index) => (
-          <div
-            id="boxes"
-            onClick={() => {
+          <div id="boxes" key={index}>
+          <div id="player02" className="player horizontal">
+            <FavoriteBorderIcon sx={{ color: 'white', position: 'absolute', right: '15px', top: '15px' }} />
+            <div className="wrapper" onClick={() => {
               setcurrentsong(item);
-            }}
-          >
-            <div id="player02" class="player horizontal">
-              <div class="wrapper">
-                <div class="info-wrapper">
-                  <img src={item.image[1].link} alt="LogoMusicImage" />
-                  <div class="info">
-                    <h1>{truncate(item.name, 10)}</h1>
-                    <p>{truncate(item.primaryArtists, 10)}</p>
-                  </div>
+              setqueue(songs.slice(index));
+            }}>
+              <div className="info-wrapper">
+                <img src={item.image[1].link} alt="LogoMusicImage" className="player-image" />
+                <div className="info">
+                  <h1>{truncate(item.name, 10)}</h1>
+                  <p>{truncate(item.primaryArtists, 10)}</p>
                 </div>
               </div>
             </div>
           </div>
+        </div>
         ))}
       </div>
       {currentsong && (
         <div style={{ marginTop: "160px" }}>
-          <Player />
+          <Player queue={queue} />
         </div>
       )}
     </>
