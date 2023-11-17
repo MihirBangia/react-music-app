@@ -1,35 +1,40 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
 // import AudioPlayer from "react-audio-player";
 import "./player.css"; // Import your CSS file
-import { SongContext } from "../../App";
 
-const Player = (props) => {
-  let [Queue,setQueue] = useState(props.queue)
+
+const Player = ({queue}) => {
+  let [songdata,setsongdata] = useState()
   let [currentsong,setcurrentsong] = useState(0)
+
   
+  let myqueue={queue};
+
+  useEffect(()=>{
+    if(myqueue.queue[0].name!==songdata?.name){
+      setcurrentsong(0)
+    }
+      setsongdata(myqueue.queue[currentsong])
+  },[myqueue.queue,currentsong])
 
 
-  const song = useContext(SongContext);
-  if (song?.downloadUrl ) {
-    const songname = song?.name.split("(")[0]
+  if (songdata?.downloadUrl ) {
+    const songname = songdata?.name.split("(")[0]
     return (
       <div className="music-player-container">
         <div className="music-player-content">
           <div className="music-info">
             <h3>{songname}</h3>
-            <p>{song?.primaryArtists}</p>
+            <p>{songdata?.primaryArtists}</p>
           </div>
           <ReactAudioPlayer
-            src={Queue[currentsong].downloadUrl[3].link} // Replace with your audio file URL
+            src={songdata?.downloadUrl[3].link} // Replace with your audio file URL
             controls={true}
             autoPlay
-            onEnded={()=>setTimeout(() => {
-              if(currentsong!=Queue.length){
-                setcurrentsong(currentsong+1)
-              }
-            }
-            ,1000)}
+            onEnded={()=>{setTimeout(() => {
+             setcurrentsong(currentsong+1)   
+            }, 1500);}}
           />
         </div>
       </div>
