@@ -12,7 +12,7 @@ const Player = ({queue}) => {
   let myqueue={queue};
 
   useEffect(()=>{
-    if(myqueue.queue[0].name!==songdata?.name){
+    if(myqueue.queue.indexOf(songdata)===-1){
       setcurrentsong(0)
     }
       setsongdata(myqueue.queue[currentsong])
