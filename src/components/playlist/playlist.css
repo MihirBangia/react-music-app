@@ -1,0 +1,11 @@
+h2{
+position: relative;
+color:white;
+margin-top: 250px;
+background-color: #080747;
+}
+@media only screen and (max-width: 600px) {
+   h2{
+    margin-top: 200px;
+   }
+}

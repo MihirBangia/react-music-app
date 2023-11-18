@@ -15,6 +15,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import "./navbar.css";
 import { useNavigate } from "react-router-dom";
  
@@ -27,7 +28,7 @@ function DrawerAppBar(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
  
   const navigate = useNavigate()
-const navItems = [<AccountCircleIcon onClick={()=>navigate('/login')} />];
+const navItems = [<LibraryMusicIcon onClick={()=>navigate('/playlist')} />,<AccountCircleIcon onClick={()=>navigate('/login')} />];
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -35,7 +36,7 @@ const navItems = [<AccountCircleIcon onClick={()=>navigate('/login')} />];
  
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
+      <Typography variant="h6" sx={{ my: 2 }} onClick={()=>navigate('/')}>
         Music Player
       </Typography>
       <Divider />
@@ -72,6 +73,7 @@ const navItems = [<AccountCircleIcon onClick={()=>navigate('/login')} />];
             variant="h6"
             component="div"
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            onClick={()=>navigate('/')}
           >
             MusicPlayer
           </Typography>

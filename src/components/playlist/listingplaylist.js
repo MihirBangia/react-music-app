@@ -1,53 +1,18 @@
 import React, {useState } from "react";
-import "./card.css";
+import "../Card/card.css";
 import Player from "../player/player";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
 
-export default function Card(props) {
-  let songs = props.songs;
+export default function ListingPlaylist(props) {
+  let songs = props.songsinarray;
   const [currentsong, setcurrentsong] = useState(null);
   const [queue,setqueue] = useState([]);
-  const list = [];
   
   function truncate(source, size) {
     return source.length > size ? source.slice(0, size - 1) + "…" : source;
   }
 
-  const notify = () => {
-    toast.success('Added to Playlist', {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      });
-  }
-
-  function setplaylist(song) {
-    list.push(song)
-    notify()
-    localStorage.setItem('playlist',JSON.stringify(list));  
-  }
-
   return (
     <>
-     <ToastContainer 
-     position="top-right" 
-     autoClose={1500} 
-     hideProgressBar={false} 
-     newestOnTop={false} 
-     closeOnClick
-     rtl={false}
-     pauseOnFocusLoss
-     draggable
-     pauseOnHover
-     theme="light" />
-
       <div
         style={{
           display: "flex",
@@ -60,7 +25,7 @@ export default function Card(props) {
         {songs?.map((item, index) => (
           <div id="boxes" key={index}>
           <div id="player02" className="player horizontal">
-            <FavoriteBorderIcon sx={{ color: 'white', position: 'absolute', right: '15px', top: '15px' }} onClick={()=>setplaylist(item)} />
+
             <div className="wrapper" onClick={() => {
               setcurrentsong(item);
               setqueue(songs.slice(index));
