@@ -6,11 +6,20 @@ import './playlist.css'
 export default function Playlist() {
     let playlist = localStorage.getItem('playlist');
     let songsinarray = JSON.parse(playlist);
+
+    function deletefromplaylist(item){
+      const indexofitem = songsinarray.indexOf(item)  
+      if (indexofitem > -1) { 
+        songsinarray.splice(indexofitem, 1); 
+      }
+      console.log(songsinarray)
+    }
+
     if(songsinarray){
         return(
         <>
             <DrawerAppBar />
-            <ListingPlaylist songsinarray={songsinarray}/>
+            <ListingPlaylist songsinarray={songsinarray} deletefromplaylist={deletefromplaylist}/>
         </>
           )
     }
