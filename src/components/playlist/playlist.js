@@ -3,12 +3,11 @@ import ListingPlaylist from "./listingplaylist";
 import DrawerAppBar from "../Navbar/navbar";
 import "./playlist.css";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 export default function Playlist() {
   let playlist = localStorage.getItem("playlist");
   let songsinarray = JSON.parse(playlist);
-  let navigate = useNavigate()
+  let[reload,setreload] = useState(false);
 
   const notify = () => {
     toast.success("Removed from Playlist", {
@@ -30,7 +29,7 @@ export default function Playlist() {
       notify();
     }
     localStorage.setItem("playlist", JSON.stringify(songsinarray));
-    navigate(0);  
+    setreload(!reload);
   }
 
   if (songsinarray) {
