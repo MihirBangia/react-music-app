@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./card.css";
 import Player from "../player/player";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,6 +12,8 @@ export default function Card(props) {
   const [queue, setqueue] = useState([]);
   let playlist = localStorage.getItem("playlist");
   let songsinarray = JSON.parse(playlist);
+  let[icon,seticon] = useState(false)
+  
   const list = songsinarray ? songsinarray : [];
 
   function truncate(source, size) {
@@ -26,27 +29,28 @@ export default function Card(props) {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "light",
+      theme: "light",  
     });
   };
 
   function setplaylist(song) {
-    let itemAvailble
-    list.map((item, index) => {
-      if (item.id === song.id) {
-        itemAvailble = true;
-      }else{
-        itemAvailble = false;
-      }
-    });
-    if (!itemAvailble) {
+    // let itemAvailble;
+    // for (let i = 0; i < list.length; i++) {
+    //   if (list[i].id === song.id) {
+    //     itemAvailble = true;
+    //     break;
+    //   } else {
+    //     itemAvailble = false;
+    //   }
+    // }
+    // if (!itemAvailble) {
       list.push(song);
       notify("Added to Playlist");
-    } 
-    else {
-      notify("Song Already avalible in Playlist");
-    }
+    // } else {
+      // notify("Song Already avalible in Playlist");
+    // }
     localStorage.setItem("playlist", JSON.stringify(list));
+    seticon(!icon)
   }
 
   return (
@@ -76,15 +80,27 @@ export default function Card(props) {
         {songs?.map((item, index) => (
           <div id="boxes" key={index}>
             <div id="player02" className="player horizontal">
-              <FavoriteBorderIcon
-                sx={{
-                  color: "white",
-                  position: "absolute",
-                  right: "15px",
-                  top: "15px",
-                }}
-                onClick={() => setplaylist(item)}
-              />
+              {songsinarray.some((arritem) => arritem.id === item.id) ? (
+                <FavoriteIcon
+                  sx={{
+                    color: "white",
+                    position: "absolute",
+                    right: "15px",
+                    top: "15px",
+                  }}
+                />
+              ) : (
+                <FavoriteBorderIcon
+                  sx={{
+                    color: "white",
+                    position: "absolute",
+                    right: "15px",
+                    top: "15px",
+                  }}
+                  onClick={() => setplaylist(item)}
+                />
+              )}
+
               <div
                 className="wrapper"
                 onClick={() => {
