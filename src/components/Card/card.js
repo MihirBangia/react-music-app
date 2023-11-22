@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./card.css";
 import Player from "../player/player";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 export default function Card(props) {
   let songs = props.songs;
   const [currentsong, setcurrentsong] = useState(null);
   const [queue, setqueue] = useState([]);
-  let playlist = localStorage.getItem("playlist");
-  let songsinarray = JSON.parse(playlist);
-  let[icon,seticon] = useState(false)
-  
-  const list = songsinarray ? songsinarray : [];
+  const[list,setlist] = useState([])
+  const[icon,seticon] = useState(true)
+
 
   function truncate(source, size) {
     return source.length > size ? source.slice(0, size - 1) + "…" : source;
@@ -33,25 +32,27 @@ export default function Card(props) {
     });
   };
 
-  function setplaylist(song) {
-    // let itemAvailble;
-    // for (let i = 0; i < list.length; i++) {
-    //   if (list[i].id === song.id) {
-    //     itemAvailble = true;
-    //     break;
-    //   } else {
-    //     itemAvailble = false;
-    //   }
-    // }
-    // if (!itemAvailble) {
-      list.push(song);
-      notify("Added to Playlist");
-    // } else {
-      // notify("Song Already avalible in Playlist");
-    // }
-    localStorage.setItem("playlist", JSON.stringify(list));
-    seticon(!icon)
+  async function setplaylist(song) {
+    let {data} = await axios.post('http://localhost:4001/addtoplaylist',song,{withCredentials:true})
+    console.log(data);
+     setlist([...list,song]); notify("Added to Playlist");seticon(!icon)
   }
+  // console.log(icon)
+
+  async function getplaylistdata() {
+    let response = await axios.get("http://localhost:4001/userplaylist", {
+      withCredentials: true,
+    }
+    );
+    setlist(response.data.songs)
+  }
+
+  useEffect(()=>{
+    console.log('called')
+    getplaylistdata();
+  },[])
+
+
 
   return (
     <>
@@ -80,7 +81,7 @@ export default function Card(props) {
         {songs?.map((item, index) => (
           <div id="boxes" key={index}>
             <div id="player02" className="player horizontal">
-              {songsinarray.some((arritem) => arritem.id === item.id) ? (
+              {list.some((arritem) => arritem.id === item.id) ? (
                 <FavoriteIcon
                   sx={{
                     color: "white",

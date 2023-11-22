@@ -17,7 +17,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 export default function SignIn() {
   const navigate = useNavigate();
-console.log(document.cookie)
+  console.log(document.cookie);
   const {
     register,
     handleSubmit,
@@ -33,7 +33,7 @@ console.log(document.cookie)
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "light",  
+      theme: "light",
     });
   };
 
@@ -47,12 +47,12 @@ console.log(document.cookie)
       { withCredentials: true }
     );
     if (response.data === "login success") {
-      notify('Login Successful',toast.success)
-     setTimeout(() => {
-      navigate("/");
-     }, 2000); 
+      notify("Login Successful", toast.success);
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     } else {
-      notify('Unable to login', toast.error)
+      notify("Unable to login", toast.error);
     }
   };
 
