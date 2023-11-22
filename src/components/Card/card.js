@@ -11,9 +11,8 @@ export default function Card(props) {
   let songs = props.songs;
   const [currentsong, setcurrentsong] = useState(null);
   const [queue, setqueue] = useState([]);
-  const[list,setlist] = useState([])
-  const[icon,seticon] = useState(true)
-
+  const [list, setlist] = useState([]);
+  const [icon, seticon] = useState(true);
 
   function truncate(source, size) {
     return source.length > size ? source.slice(0, size - 1) + "…" : source;
@@ -28,31 +27,34 @@ export default function Card(props) {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "light",  
+      theme: "light",
     });
   };
 
   async function setplaylist(song) {
-    let {data} = await axios.post('http://localhost:4001/addtoplaylist',song,{withCredentials:true})
+    let { data } = await axios.post(
+      "process.env.BACKEND_URL/addtoplaylist",
+      song,
+      { withCredentials: true }
+    );
     console.log(data);
-     setlist([...list,song]); notify("Added to Playlist");seticon(!icon)
+    setlist([...list, song]);
+    notify("Added to Playlist");
+    seticon(!icon);
   }
   // console.log(icon)
 
   async function getplaylistdata() {
-    let response = await axios.get("http://localhost:4001/userplaylist", {
+    let response = await axios.get("process.env.BACKEND_URL/userplaylist", {
       withCredentials: true,
-    }
-    );
-    setlist(response.data.songs)
+    });
+    setlist(response.data.songs);
   }
 
-  useEffect(()=>{
-    console.log('called')
+  useEffect(() => {
+    console.log("called");
     getplaylistdata();
-  },[])
-
-
+  }, []);
 
   return (
     <>
