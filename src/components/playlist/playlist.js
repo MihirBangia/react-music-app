@@ -1,13 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ListingPlaylist from "./listingplaylist";
 import DrawerAppBar from "../Navbar/navbar";
 import "./playlist.css";
 import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 
 export default function Playlist() {
-  let playlist = localStorage.getItem("playlist");
-  let songsinarray = JSON.parse(playlist);
-  let[reload,setreload] = useState(false);
+  let [songsinarray, setsonginarray] = useState([]);
+  // let playlist = localStorage.getItem("playlist");
+  // let songsinarray = JSON.parse(playlist);
+  // let[reload,setreload] = useState(false);
+
+  async function getplaylistdata() {
+    let response = await axios.get("process.env.BACKEND_URL/userplaylist", {
+      withCredentials: true,
+    });
+    setsonginarray(response.data.songs);
+  }
+
+  useEffect(() => {
+    getplaylistdata();
+  }, [songsinarray]);
 
   const notify = () => {
     toast.success("Removed from Playlist", {
@@ -22,14 +35,16 @@ export default function Playlist() {
     });
   };
 
-  function deletefromplaylist(item) {
-    const indexofitem = songsinarray.indexOf(item);
-    if (indexofitem > -1) {
-      songsinarray.splice(indexofitem, 1);
-      notify();
-    }
-    localStorage.setItem("playlist", JSON.stringify(songsinarray));
-    setreload(!reload);
+  async function deletefromplaylist(item) {
+    let response1 = await axios.post(
+      "process.env.BACKEND_URL/deletesong",
+      item,
+      {
+        withCredentials: true,
+      }
+    );
+    setsonginarray(response1.data.songs);
+    notify();
   }
 
   if (songsinarray) {

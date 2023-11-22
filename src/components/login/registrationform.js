@@ -13,64 +13,29 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import DrawerAppBar from "../Navbar/navbar";
-import { ToastContainer, toast } from "react-toastify";
 
-export default function SignIn() {
+export default function RegistrationForm() {
   const navigate = useNavigate();
-  console.log(document.cookie);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const notify = (message, condition) => {
-    condition(message, {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  };
-
   const onSubmit = async (data) => {
-    let response = await axios.post(
-      "process.env.BACKEND_URL/login",
-      {
-        password: data.password,
-        email: data.email,
-      },
-      { withCredentials: true }
-    );
-    if (response.data === "login success") {
-      notify("Login Successful", toast.success);
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
-    } else {
-      notify("Unable to login", toast.error);
+    // console.log(data)
+    let response = await axios.post("process.env.BACKEND_URL/user", {
+      name: data.name,
+      password: data.password,
+      email: data.email,
+    });
+    if (response.status === 200) {
+      navigate("/login");
     }
   };
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={1500}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-
       <DrawerAppBar />
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
@@ -105,7 +70,7 @@ export default function SignIn() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Register
             </Typography>
             <Box
               component="form"
@@ -118,13 +83,24 @@ export default function SignIn() {
                 required
                 fullWidth
                 id="email"
+                label="username"
+                name="name"
+                autoFocus
+                {...register("name", { required: "Name is required" })}
+              />
+              <span className="error-message">{errors.name?.message}</span>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
                 label="Email Address"
                 name="email"
                 autoComplete="email"
                 autoFocus
                 {...register("email", { required: "Email is required" })}
               />
-              <span className="error-message">{errors.name?.message}</span>
+              <span className="error-message">{errors.email?.message}</span>
               <TextField
                 margin="normal"
                 required
@@ -143,21 +119,16 @@ export default function SignIn() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Register
               </Button>
               <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
                 <Grid item>
                   <Link
                     href="#"
                     variant="body2"
-                    onClick={() => navigate("/register")}
+                    onClick={() => navigate("/login")}
                   >
-                    {"Don't have an account? Sign Up"}
+                    {"Already have a account? Sign In"}
                   </Link>
                 </Grid>
               </Grid>

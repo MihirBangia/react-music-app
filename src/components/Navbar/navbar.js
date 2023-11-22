@@ -77,7 +77,7 @@ const navItems = [<LibraryMusicIcon onClick={()=>navigate('/playlist')} />,<Acco
           >
             MusicPlayer
           </Typography>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          <Box sx={{ display: { xs: "none", sm: "flex" } }}>
             {navItems.map((item,index) => (
               <Button key={index} sx={{ color: "#fff" }}>
                 {item}
