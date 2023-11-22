@@ -24,7 +24,7 @@ export default function RegistrationForm() {
 
   const onSubmit = async (data) => {
     // console.log(data)
-    let response = await axios.post("process.env.BACKEND_URL/user", {
+    let response = await axios.post(`${process.env.BACKEND_URL}/user`, {
       name: data.name,
       password: data.password,
       email: data.email,
