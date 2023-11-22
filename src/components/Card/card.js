@@ -33,7 +33,7 @@ export default function Card(props) {
 
   async function setplaylist(song) {
     let { data } = await axios.post(
-      "process.env.BACKEND_URL/addtoplaylist",
+      `${process.env.BACKEND_URL}/addtoplaylist`,
       song,
       { withCredentials: true }
     );
@@ -45,7 +45,7 @@ export default function Card(props) {
   // console.log(icon)
 
   async function getplaylistdata() {
-    let response = await axios.get("process.env.BACKEND_URL/userplaylist", {
+    let response = await axios.get(`${process.env.BACKEND_URL}/userplaylist`, {
       withCredentials: true,
     });
     setlist(response.data.songs);
@@ -83,7 +83,7 @@ export default function Card(props) {
         {songs?.map((item, index) => (
           <div id="boxes" key={index}>
             <div id="player02" className="player horizontal">
-              {list.some((arritem) => arritem.id === item.id) ? (
+              {list?.some((arritem) => arritem.id === item.id) ? (
                 <FavoriteIcon
                   sx={{
                     color: "white",

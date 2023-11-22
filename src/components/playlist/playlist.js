@@ -12,7 +12,7 @@ export default function Playlist() {
   // let[reload,setreload] = useState(false);
 
   async function getplaylistdata() {
-    let response = await axios.get("process.env.BACKEND_URL/userplaylist", {
+    let response = await axios.get(`${process.env.BACKEND_URL}/userplaylist`, {
       withCredentials: true,
     });
     setsonginarray(response.data.songs);
@@ -37,7 +37,7 @@ export default function Playlist() {
 
   async function deletefromplaylist(item) {
     let response1 = await axios.post(
-      "process.env.BACKEND_URL/deletesong",
+      `${process.env.BACKEND_URL}/deletesong`,
       item,
       {
         withCredentials: true,
