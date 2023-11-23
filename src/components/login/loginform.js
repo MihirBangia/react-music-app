@@ -14,10 +14,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import DrawerAppBar from "../Navbar/navbar";
 import { ToastContainer, toast } from "react-toastify";
+import { useEffect } from "react";
+import { useState } from "react";
+
 
 export default function SignIn() {
   const navigate = useNavigate();
-  console.log(document.cookie);
+  const [loading, isLoading] = useState(true)
+  // console.log(document.cookie);
   const {
     register,
     handleSubmit,
@@ -37,9 +41,22 @@ export default function SignIn() {
     });
   };
 
+  const checkLoggedIn = async () => {
+    let { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/checklogin`, { withCredentials: true })
+    if (data === 'LOGGED_IN') {
+      notify("Already Logged In", toast.warning);
+      setTimeout(() => {
+        navigate("/");
+      }, 100);
+    }else{
+      isLoading(false)
+    }
+  }
+
+
   const onSubmit = async (data) => {
     let response = await axios.post(
-      `${process.env.BACKEND_URL}/login`,
+      `${process.env.REACT_APP_BACKEND_URL}/login`,
       {
         password: data.password,
         email: data.email,
@@ -56,7 +73,14 @@ export default function SignIn() {
     }
   };
 
+
+  useEffect(() => {
+    checkLoggedIn()
+  }, [])
+  
+  
   return (
+      (!loading ? 
     <>
       <ToastContainer
         position="top-right"
@@ -166,5 +190,6 @@ export default function SignIn() {
         </Grid>
       </Grid>
     </>
+      : '')
   );
 }
