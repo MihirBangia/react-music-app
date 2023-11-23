@@ -4,26 +4,14 @@ import DrawerAppBar from "../Navbar/navbar";
 import "./playlist.css";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Playlist() {
   let [songsinarray, setsonginarray] = useState([]);
-  // let playlist = localStorage.getItem("playlist");
-  // let songsinarray = JSON.parse(playlist);
-  // let[reload,setreload] = useState(false);
+  const navigate = useNavigate()
 
-  async function getplaylistdata() {
-    let response = await axios.get(`${process.env.BACKEND_URL}/userplaylist`, {
-      withCredentials: true,
-    });
-    setsonginarray(response.data.songs);
-  }
-
-  useEffect(() => {
-    getplaylistdata();
-  }, [songsinarray]);
-
-  const notify = () => {
-    toast.success("Removed from Playlist", {
+  const notify = (message, condition) => {
+    condition(message, {
       position: "top-right",
       autoClose: 1000,
       hideProgressBar: false,
@@ -35,16 +23,37 @@ export default function Playlist() {
     });
   };
 
+  async function getplaylistdata() {
+    let response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/userplaylist`, {
+      withCredentials: true,
+    });
+    console.log(response);
+    if (response.data.songs === "NOT_LOGGED_IN") {
+      setTimeout(() => {
+        navigate('/login')
+      }, 1000);
+      notify("Please Login First for Playlist", toast.warning)
+    } else {
+      setsonginarray(response.data.songs);
+    }
+  }
+
+  useEffect(() => {
+    getplaylistdata();
+  }, [songsinarray]);
+
+
+
   async function deletefromplaylist(item) {
     let response1 = await axios.post(
-      `${process.env.BACKEND_URL}/deletesong`,
+      `${process.env.REACT_APP_BACKEND_URL}/deletesong`,
       item,
       {
         withCredentials: true,
       }
     );
     setsonginarray(response1.data.songs);
-    notify();
+    notify("Removed from Playlist", toast.success);
   }
 
   if (songsinarray) {

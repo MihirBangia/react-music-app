@@ -24,7 +24,7 @@ export default function RegistrationForm() {
 
   const onSubmit = async (data) => {
     // console.log(data)
-    let response = await axios.post(`${process.env.BACKEND_URL}/user`, {
+    let response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user`, {
       name: data.name,
       password: data.password,
       email: data.email,
@@ -97,7 +97,6 @@ export default function RegistrationForm() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                autoFocus
                 {...register("email", { required: "Email is required" })}
               />
               <span className="error-message">{errors.email?.message}</span>

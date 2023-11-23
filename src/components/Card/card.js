@@ -18,8 +18,8 @@ export default function Card(props) {
     return source.length > size ? source.slice(0, size - 1) + "…" : source;
   }
 
-  const notify = (message) => {
-    toast.success(message, {
+  const notify = (message, condition) => {
+    condition(message, {
       position: "top-right",
       autoClose: 1000,
       hideProgressBar: false,
@@ -33,26 +33,25 @@ export default function Card(props) {
 
   async function setplaylist(song) {
     let { data } = await axios.post(
-      `${process.env.BACKEND_URL}/addtoplaylist`,
+      `${process.env.REACT_APP_BACKEND_URL}/addtoplaylist`,
       song,
       { withCredentials: true }
     );
     console.log(data);
     setlist([...list, song]);
-    notify("Added to Playlist");
+    notify("Added to Playlist", toast.success);
     seticon(!icon);
   }
   // console.log(icon)
 
   async function getplaylistdata() {
-    let response = await axios.get(`${process.env.BACKEND_URL}/userplaylist`, {
+    let response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/userplaylist`, {
       withCredentials: true,
     });
     setlist(response.data.songs);
   }
 
   useEffect(() => {
-    console.log("called");
     getplaylistdata();
   }, []);
 
@@ -83,7 +82,7 @@ export default function Card(props) {
         {songs?.map((item, index) => (
           <div id="boxes" key={index}>
             <div id="player02" className="player horizontal">
-              {list?.some((arritem) => arritem.id === item.id) ? (
+              {list !== "NOT_LOGGED_IN" && list?.some((arritem) => arritem.id === item.id) ? (
                 <FavoriteIcon
                   sx={{
                     color: "white",
@@ -104,25 +103,38 @@ export default function Card(props) {
                 />
               )}
 
-              <div
-                className="wrapper"
-                onClick={() => {
-                  setcurrentsong(item);
-                  setqueue(songs.slice(index));
+
+              {list === "NOT_LOGGED_IN" ? (
+                <FavoriteBorderIcon
+                sx={{
+                  color: "white",
+                  position: "absolute",
+                  right: "15px",
+                  top: "15px",
                 }}
-              >
-                <div className="info-wrapper">
-                  <img
-                    src={item.image[1].link}
-                    alt="LogoMusicImage"
-                    className="player-image"
-                  />
-                  <div className="info">
-                    <h1>{truncate(item.name, 10)}</h1>
-                    <p>{truncate(item.primaryArtists, 10)}</p>
+                onClick={()=>notify("Please Login First", toast.warning)}
+              />
+              ):''}
+
+                <div
+                  className="wrapper"
+                  onClick={() => {
+                    setcurrentsong(item);
+                    setqueue(songs.slice(index));
+                  }}
+                >
+                  <div className="info-wrapper">
+                    <img
+                      src={item.image[1].link}
+                      alt="LogoMusicImage"
+                      className="player-image"
+                    />
+                    <div className="info">
+                      <h1>{truncate(item.name, 10)}</h1>
+                      <p>{truncate(item.primaryArtists, 10)}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
             </div>
           </div>
         ))}
