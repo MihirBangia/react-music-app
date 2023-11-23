@@ -26,6 +26,7 @@ export default function Playlist() {
   async function getplaylistdata() {
     let response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/userplaylist`, {
       withCredentials: true,
+      baseURL: process.env.REACT_APP_BACKEND_URL
     });
     console.log(response);
     if (response.data.songs === "NOT_LOGGED_IN") {
@@ -50,6 +51,7 @@ export default function Playlist() {
       item,
       {
         withCredentials: true,
+        baseURL: process.env.REACT_APP_BACKEND_URL
       }
     );
     setsonginarray(response1.data.songs);

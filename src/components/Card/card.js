@@ -35,7 +35,7 @@ export default function Card(props) {
     let { data } = await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/addtoplaylist`,
       song,
-      { withCredentials: true }
+      { withCredentials: true, baseURL: process.env.REACT_APP_BACKEND_URL }
     );
     console.log(data);
     setlist([...list, song]);
@@ -47,6 +47,7 @@ export default function Card(props) {
   async function getplaylistdata() {
     let response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/userplaylist`, {
       withCredentials: true,
+      baseURL: process.env.REACT_APP_BACKEND_URL
     });
     setlist(response.data.songs);
   }
