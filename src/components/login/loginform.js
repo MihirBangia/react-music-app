@@ -42,7 +42,7 @@ export default function SignIn() {
   };
 
   const checkLoggedIn = async () => {
-    let { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/checklogin`, { withCredentials: true })
+    let { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/checklogin`, { withCredentials: true, baseURL: process.env.REACT_APP_BACKEND_URL })
     if (data === 'LOGGED_IN') {
       notify("Already Logged In", toast.warning);
       setTimeout(() => {
@@ -61,7 +61,7 @@ export default function SignIn() {
         password: data.password,
         email: data.email,
       },
-      { withCredentials: true }
+      { withCredentials: true, baseURL: process.env.REACT_APP_BACKEND_URL}
     );
     if (response.data === "login success") {
       notify("Login Successful", toast.success);
