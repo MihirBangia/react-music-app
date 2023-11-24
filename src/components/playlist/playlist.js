@@ -28,7 +28,6 @@ export default function Playlist() {
       withCredentials: true,
       baseURL: process.env.REACT_APP_BACKEND_URL
     });
-    console.log(response);
     if (response.data.songs === "NOT_LOGGED_IN") {
       setTimeout(() => {
         navigate('/login')
@@ -41,7 +40,7 @@ export default function Playlist() {
 
   useEffect(() => {
     getplaylistdata();
-  }, [songsinarray]);
+  }, []);
 
 
 
