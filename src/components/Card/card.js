@@ -37,7 +37,7 @@ export default function Card(props) {
       song,
       { withCredentials: true, baseURL: process.env.REACT_APP_BACKEND_URL }
     );
-    console.log(data);
+    // console.log(data);
     setlist([...list, song]);
     notify("Added to Playlist", toast.success);
     seticon(!icon);
