@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import ReactAudioPlayer from "react-audio-player";
+// import ReactAudioPlayer from "react-audio-player";
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 // import AudioPlayer from "react-audio-player";
 import "./player.css"; // Import your CSS file
 
@@ -28,13 +30,22 @@ const Player = ({queue}) => {
             <h3>{songname}</h3>
             <p>{songdata?.primaryArtists}</p>
           </div>
-          <ReactAudioPlayer
+          <AudioPlayer
             src={songdata?.downloadUrl[3].link} // Replace with your audio file URL
             controls={true}
+            showSkipControls={true}
+            showJumpControls={false}
+            customVolumeControls={[]}
             autoPlay
             onEnded={()=>{setTimeout(() => {
              setcurrentsong(currentsong+1)   
             }, 1500);}}
+            onClickNext={()=>{
+              setcurrentsong(currentsong+1)
+            }}
+            onClickPrevious={()=>{
+              setcurrentsong(currentsong-1)
+            }}
           />
         </div>
       </div>
