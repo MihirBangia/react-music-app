@@ -4,6 +4,7 @@ import Home from '../Home/home'
 import Playlist from '../playlist/playlist'
 import RegistrationForm from '../login/registrationform'
 import SignIn from '../login/loginform'
+import Albums from '../Albums/albums'
 
 export default function UseRoutes() {
   return (
@@ -12,6 +13,7 @@ export default function UseRoutes() {
         <Route path={'/login'} element={<SignIn />} />
         <Route path={'/playlist'} element={<Playlist />} />
         <Route path ={'/register'} element={<RegistrationForm />} />
+        <Route path={'/albums'} element={<Albums />} />
     </Routes>
   )
 }
