@@ -18,6 +18,15 @@ export default function Albums() {
     slidesToShow: 5,
     slidesToScroll: 5,
     arrows:false,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   function truncate(source, size) {
@@ -35,28 +44,28 @@ export default function Albums() {
     getalbums();
   }, []);
 
-  console.log(albums);
   return (
     <div>
       <DrawerAppBar />
       <h1 style={{ color: "white" }}>Top Albums</h1>
-      <div class="album-container">
+      <div className="album-container">
           <Slider {...settings} className="slider" adaptiveHeight>
         {albums?.map((item, index) => {
+          if(item.type==="album"){
           return (
-            <div class="album-item">
+            <div className="album-item" key={index}>
               <img
-                class="album-cover"
+                className="album-cover"
                 src={item.image[2].link}
                 alt="Album 1 Cover"
               />
-              <div class="album-info">
-                <p class="album-title">{truncate(item.name,10)}</p>
-                <p class="artist">Language: {item.language}</p>
+              <div className="album-info">
+                <p className="album-title">{truncate(item.name,10)}</p>
+                <p className="artist">Language: {item.language}</p>
               </div>
             </div>
           );
-        })}
+        }})}
         </Slider>
       </div>
         <ApiPlaylists />

@@ -15,6 +15,15 @@ export default function ApiPlaylists() {
     slidesToShow: 5,
     slidesToScroll: 5,
     arrows:false,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   function truncate(source, size) {
@@ -32,23 +41,22 @@ export default function ApiPlaylists() {
     getalbums();
   }, []);
 
-  console.log(albums);
   return (
     <div>
       <h1 style={{ color: "white" }}>Top Playlists</h1>
-      <div class="album-container">
+      <div className="album-container">
           <Slider {...settings} className="slider" adaptiveHeight>
         {albums?.map((item, index) => {
           return (
-            <div class="album-item">
+            <div className="album-item" key={index}>
               <img
-                class="album-cover"
+                className="album-cover"
                 src={item.image[2].link}
                 alt="Album 1 Cover"
               />
-              <div class="album-info">
-                <p class="album-title">{truncate(item.title,10)}</p>
-                <p class="artist">Songs: {item.songCount}</p>
+              <div className="album-info">
+                <p className="album-title">{truncate(item.title,10)}</p>
+                <p className="artist">Songs: {item.songCount}</p>
               </div>
             </div>
           );
