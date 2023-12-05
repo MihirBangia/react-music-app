@@ -3,13 +3,12 @@ import React, { useEffect, useState } from "react";
 import "./albums.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import DrawerAppBar from "../Navbar/navbar";
 import Slider from "react-slick";
-import ApiPlaylists from "../ApiPlaylist/apiPlaylist";
-import ApiCharts from "../ApiCharts/apiCharts";
+import { useNavigate } from "react-router-dom";
 
 export default function Albums() {
   const [albums, setalbums] = useState([]);
+  const navigate = useNavigate();
 
   var settings = {
     // dots: true,
@@ -40,20 +39,23 @@ export default function Albums() {
     setalbums(res.data.data.albums);
   }
 
+  function redirectToList(albumlink){
+    navigate('/albumsongs',{state:{link:albumlink}});
+  }
+
   useEffect(() => {
     getalbums();
   }, []);
 
   return (
     <div>
-      <DrawerAppBar />
       <h1 style={{ color: "white" }}>Top Albums</h1>
       <div className="album-container">
           <Slider {...settings} className="slider" adaptiveHeight>
         {albums?.map((item, index) => {
           if(item.type==="album"){
           return (
-            <div className="album-item" key={index}>
+            <div className="album-item" key={index} onClick={()=>redirectToList(item.url)}>
               <img
                 className="album-cover"
                 src={item.image[2].link}
@@ -68,8 +70,6 @@ export default function Albums() {
         }})}
         </Slider>
       </div>
-        <ApiPlaylists />
-        <ApiCharts />
     </div>
   );
 }

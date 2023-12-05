@@ -2,6 +2,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import DrawerAppBar from "../Navbar/navbar";
 import Card from "../Card/card";
+import Albums from "../Albums/albums";
+import ApiPlaylists from "../ApiPlaylist/apiPlaylist";
+import ApiCharts from "../ApiCharts/apiCharts";
  
 export default function Home() {
   let [songs, setsongs] = useState([]);
@@ -35,7 +38,9 @@ export default function Home() {
   return (
     <div>
       <DrawerAppBar onSubmit={onSubmit} />
-      <Card songs={songs} />
+      <Albums />
+      <ApiPlaylists />
+      <ApiCharts />
     </div>
   );
 }
