@@ -15,8 +15,11 @@ export default function Albums() {
     infinite: true,
     speed: 500,
     slidesToShow: 5,
-    slidesToScroll: 5,
+    slidesToScroll: 1,
     arrows:false,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    easing:"ease",
     responsive: [
       {
         breakpoint: 768,
@@ -52,7 +55,7 @@ export default function Albums() {
       <h1 style={{ color: "white" }}>Top Albums</h1>
       <div className="album-container">
           <Slider {...settings} className="slider" adaptiveHeight>
-        {albums?.map((item, index) => {
+            {albums.length>0? albums?.map((item, index) => {
           if(item.type==="album"){
           return (
             <div className="album-item" key={index} onClick={()=>redirectToList(item.url)}>
@@ -67,7 +70,8 @@ export default function Albums() {
               </div>
             </div>
           );
-        }})}
+        }})
+        :<h1 style={{backgroundColor:'black',color:'white'}}>Loading...</h1>}
         </Slider>
       </div>
     </div>

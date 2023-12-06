@@ -46,7 +46,7 @@ export default function ApiCharts() {
       <h1 style={{ color: "white" }}>Top Charts</h1>
       <div className="album-container">
           <Slider {...settings} className="slider" adaptiveHeight>
-        {albums?.map((item, index) => {
+        {albums.length> 0 ? albums?.map((item, index) => {
           return (
             <div className="album-item" key={index}>
               <img
@@ -60,7 +60,7 @@ export default function ApiCharts() {
               </div>
             </div>
           );
-        })}
+        }):<h1 style={{backgroundColor:'white',color:'black'}}>Loading...</h1>}
         </Slider>
       </div>
     </div>

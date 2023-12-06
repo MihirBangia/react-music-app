@@ -46,7 +46,7 @@ export default function ApiPlaylists() {
       <h1 style={{ color: "white" }}>Top Playlists</h1>
       <div className="album-container">
           <Slider {...settings} className="slider" adaptiveHeight>
-        {albums?.map((item, index) => {
+        {albums.length>0 ? albums?.map((item, index) => {
           return (
             <div className="album-item" key={index}>
               <img
@@ -60,7 +60,7 @@ export default function ApiPlaylists() {
               </div>
             </div>
           );
-        })}
+        }):<h1 style={{backgroundColor:'white',color:'black'}}>Loading...</h1>}
         </Slider>
       </div>
     </div>
