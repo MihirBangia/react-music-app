@@ -4,6 +4,7 @@ import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 // import AudioPlayer from "react-audio-player";
 import "./player.css"; // Import your CSS file
+import CloseIcon from '@mui/icons-material/Close';
 
 
 const Player = ({queue}) => {
@@ -24,14 +25,16 @@ const Player = ({queue}) => {
   if (songdata?.downloadUrl ) {
     const songname = songdata?.name.split("(")[0]
     return (
+      <>
       <div className="music-player-container">
+      {/* <CloseIcon sx={{color:"white",position:'absolute',right:'25px',cursor:'pointer'}}/> */}
         <div className="music-player-content">
           <div className="music-info">
             <h3>{songname}</h3>
             <p>{songdata?.primaryArtists}</p>
           </div>
           <AudioPlayer
-            src={songdata?.downloadUrl[3].link} // Replace with your audio file URL
+            src={songdata?.downloadUrl[4].link} // Replace with your audio file URL
             controls={true}
             showSkipControls={true}
             showJumpControls={false}
@@ -49,6 +52,7 @@ const Player = ({queue}) => {
           />
         </div>
       </div>
+      </>
     );
   } else return null;
 };
