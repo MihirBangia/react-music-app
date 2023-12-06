@@ -114,23 +114,31 @@ export default function AlbumSongs() {
             <ul className={styles.songList}>
               {songsinalbum?.songs.map((item, index) => (
                 <>
-                  <li
-                    key={index}
-                    className={styles.songItem}
-                    onClick={() => {
-                      setcurrentsong(item);
-                      setqueue(songsinalbum.songs.slice(index));
-                    }}
-                  >
-                    <span>
-                      {index + 1}. {truncate(item.name, 20)}
-                    </span>
-                    <span>{formatTime(item.duration)}</span>
-                    {/* {list !== "NOT_LOGGED_IN" &&
+                  <li key={index} className={styles.songItem}>
+                    <div
+                      onClick={() => {
+                        setcurrentsong(item);
+                        setqueue(songsinalbum.songs.slice(index));
+                      }}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: "10px",
+                        width: "92%",
+                      }}
+                    >
+                      <span>
+                        {index + 1}. {truncate(item.name, 20)}
+                      </span>
+
+                      <span>{formatTime(item.duration)}</span>
+                    </div>
+                    {list !== "NOT_LOGGED_IN" &&
                     list?.some((arritem) => arritem.id === item.id) ? (
                       <FavoriteIcon
                         sx={{
-                          color: "black",
+                          color: "red",
                         }}
                       />
                     ) : (
@@ -140,15 +148,7 @@ export default function AlbumSongs() {
                         }}
                         onClick={() => setplaylist(item)}
                       />
-                    )} */}
-                     {list === "NOT_LOGGED_IN" ? (
-                <FavoriteBorderIcon
-                sx={{
-                  color: "black",
-                }}
-                onClick={()=>notify("Please Login First", toast.warning)}
-              />
-              ):''}
+                    )}
                   </li>
                 </>
               ))}
