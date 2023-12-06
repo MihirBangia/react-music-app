@@ -1,0 +1,56 @@
+.main {
+    background-color: #ecf0f1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 2rem auto;
+    max-width: 600px;
+  }
+
+  .albumSection {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .albumCover {
+    width: 100%;
+    height: auto;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .albumInfo {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.856);
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #fff;
+  }
+
+  .songList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .songItem {
+    padding: 1rem;
+    color:black;
+    border-bottom: 1px solid #2c3e50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .songItem:hover {
+    background-color: #d5d5d5;
+  }
