@@ -116,6 +116,7 @@ export default function ApiPlaylistSongs() {
                 <>
                   <li key={index} className={styles.songItem}>
                     <div
+                    className={styles.songDiv}
                       onClick={() => {
                         setcurrentsong(item);
                         setqueue(songsinalbum.songs.slice(index));
@@ -139,12 +140,14 @@ export default function ApiPlaylistSongs() {
                       <FavoriteIcon
                         sx={{
                           color: "red",
+                          marginRight: "16px",
                         }}
                       />
                     ) : (
                       <FavoriteBorderIcon
                         sx={{
                           color: "black",
+                          marginRight: "16px",
                         }}
                         onClick={() => setplaylist(item)}
                       />

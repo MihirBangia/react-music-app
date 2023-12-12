@@ -17,8 +17,6 @@ export default function Albums() {
     slidesToShow: 5,
     slidesToScroll: 1,
     arrows:false,
-    autoplay: true,
-    autoplaySpeed: 5000,
     easing:"ease",
     responsive: [
       {
@@ -45,7 +43,7 @@ export default function Albums() {
   function redirectToList(albumlink){
     navigate('/albumsongs',{state:{link:albumlink}});
   }
-
+ 
   useEffect(() => {
     getalbums();
   }, []);

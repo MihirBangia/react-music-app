@@ -18,15 +18,23 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import "./navbar.css";
 import { useNavigate } from "react-router-dom";
+import SearchComponent from "../Search/searchComponent";
  
  
 const drawerWidth = 240;
+
+
 
  
 function DrawerAppBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
- 
+  let[searchword,setsearchword] = React.useState('');
+
+  const searchwordinput=(newWords)=>{
+    setsearchword(newWords);
+    }
+
   const navigate = useNavigate()
 const navItems = [<LibraryMusicIcon onClick={()=>navigate('/playlist')} />,<AccountCircleIcon onClick={()=>navigate('/login')} />];
 
@@ -90,9 +98,12 @@ const navItems = [<LibraryMusicIcon onClick={()=>navigate('/playlist')} />,<Acco
             className="form"
             name="search"
             placeholder="Search Your Song Here.."
-            onChange={(event)=>props.onSubmit(event)}
+            onChange={(event)=>searchwordinput(event.target.value)}
           />
       </AppBar>
+      {
+        searchword.length > 0 && <SearchComponent searchword={searchword} />
+      }
       <nav style={{ marginBottom: "100px", backgroundColor: "#080747" }}>
         <Drawer
           container={container}

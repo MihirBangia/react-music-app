@@ -116,16 +116,10 @@ export default function AlbumSongs() {
                 <>
                   <li key={index} className={styles.songItem}>
                     <div
+                      className={styles.songDiv}
                       onClick={() => {
                         setcurrentsong(item);
                         setqueue(songsinalbum.songs.slice(index));
-                      }}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        gap: "10px",
-                        width: "92%",
                       }}
                     >
                       <span>
@@ -139,12 +133,14 @@ export default function AlbumSongs() {
                       <FavoriteIcon
                         sx={{
                           color: "red",
+                          marginRight: "16px",
                         }}
                       />
                     ) : (
                       <FavoriteBorderIcon
                         sx={{
                           color: "black",
+                          marginRight: "16px",
                         }}
                         onClick={() => setplaylist(item)}
                       />
