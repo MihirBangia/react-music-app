@@ -4,13 +4,13 @@ import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 // import AudioPlayer from "react-audio-player";
 import "./player.css"; // Import your CSS file
-import CloseIcon from "@mui/icons-material/Close";
+import CloseIcon from "@mui/icons-material/Close";  
 
 const Player = ({ queue }) => {
   let [songdata, setsongdata] = useState();
   let [currentsong, setcurrentsong] = useState(0);
 
-  let myqueue = { queue };
+  let myqueue = { queue }; 
 
   useEffect(() => {
     if (myqueue.queue.indexOf(songdata) === -1) {

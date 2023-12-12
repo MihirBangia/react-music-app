@@ -12,9 +12,6 @@
   border-radius: 8px;
 }
 
-/* .searchDiv .songSearchItem:not(:first-child) {
-    margin-top: 25px;
-} */
 .songSearchItem {
   display: flex;
   margin-top: 25px;
@@ -22,21 +19,26 @@
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+  cursor: pointer;
 }
+
 .songDetails {
   display: flex;
   flex-direction: column;
   align-items: start;
   margin: 0 10px;
 }
+
 .songDetails .songName {
   font-size: 16px;
   color: white;
 }
+
 .songDetails .songArtists {
   color: white;
   font-size: 13px;
 }
+
 .searchDiv::-webkit-scrollbar {
   width: 6px;
 }
@@ -50,4 +52,20 @@
   outline: 1px solid slategrey;
   border: 4px solid transparent;
   border-radius: 8px;
+}
+
+/* Media Query for Responsive Design */
+@media only screen and (max-width: 768px) {
+  .searchDiv {
+    width: 90%; /* Adjust the width for smaller screens */
+    right: 5%; /* Adjust the right position for smaller screens */
+  }
+
+  .songDetails .songName {
+    font-size: 14px; /* Adjust font size for smaller screens */
+  }
+
+  .songDetails .songArtists {
+    font-size: 11px; /* Adjust font size for smaller screens */
+  }
 }

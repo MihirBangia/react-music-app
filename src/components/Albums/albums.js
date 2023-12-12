@@ -43,7 +43,7 @@ export default function Albums() {
   function redirectToList(albumlink){
     navigate('/albumsongs',{state:{link:albumlink}});
   }
-
+ 
   useEffect(() => {
     getalbums();
   }, []);
